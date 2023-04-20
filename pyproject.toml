@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rs_signal_extract"
+description = "Generate connectome from fMRIPrep outputs with nilearn."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file="LICENSE" }
+authors = [
+  { name="Hao-Ting Wang", email="htwangtw@gmail.com" },
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+  "h5py",
+  "nilearn",
+  "pybids",
+  "templateflow",
+  "tqdm",
+]
+dynamic = ["version"]
+
+[project.scripts]
+rs_signal_extract = "rs_signal_extract.run:main"
+
+[project.optional-dependencies]
+dev = [
+  "black",
+  "pre-commit",
+  "rs_signal_extract[test]",
+]
+test = [
+  "pytest",
+  "pytest-cov",
+]
+# Aliases
+tests = ["rs_signal_extract[test]"]
+
+[project.urls]
+"Homepage" = "https://github.com/bids-app/rs_signal_extract"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "rs_signal_extract/_version.py"
+
+[tool.hatch.build.targets.sdist]
+exclude = [".git_archival.txt"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["rs_signal_extract"]
+
+[tool.black]
+target-version = ['py38']
+exclude = "rs_signal_extract/_version.py"
+line_length = 79
